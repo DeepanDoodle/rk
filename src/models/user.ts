@@ -1,4 +1,4 @@
-import { Sequelize, Model, DataTypes } from "sequelize";
+import {  Model, DataTypes } from "sequelize";
 import { sequelize } from "../instances/sequelize";
 
 export class User extends Model {
@@ -11,7 +11,7 @@ export class User extends Model {
   updatedAt!: Date;
 }
 
-User.init(
+(User as any).init(
   {
     id: {
       type: DataTypes.INTEGER.UNSIGNED,

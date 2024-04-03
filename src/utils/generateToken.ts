@@ -1,6 +1,6 @@
 import jwt, { Secret } from "jsonwebtoken";
 
-export function generateAccessToken(userId: number): string {
+export function generateAccessToken(userId: Number): string {
   const accessToken = jwt.sign(
     { userId },
     process.env.JWT_SECRET_KEY as Secret,

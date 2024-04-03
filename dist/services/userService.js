@@ -15,6 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = require("../models/user");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const generateToken_1 = require("../utils/generateToken");
+const code_1 = require("../responseCode/code");
+const codeMsg_1 = require("../config/codeMsg");
+const email_1 = __importDefault(require("../utils/email"));
 class UserService {
 }
 exports.default = UserService;
@@ -58,5 +61,45 @@ UserService.login = (userName, password) => __awaiter(void 0, void 0, void 0, fu
     }
     catch (error) {
         return { error: error.message };
+    }
+});
+UserService.forgetPasswordService = (req) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { email_id } = req.body;
+        const isUserExist = yield user_1.User.findOne({ where: { email: email_id } });
+        console.log(isUserExist);
+        if (!isUserExist) {
+            return {
+                success: false,
+                status: code_1.ResponseStatus.HTTP_BAD_GATEWAY,
+                message: codeMsg_1.messages.notRegistered,
+            };
+        }
+        const user_id = isUserExist.id;
+        yield (0, email_1.default)(email_id, user_id);
+        return {
+            success: true,
+            status: code_1.ResponseStatus.HTTP_OK,
+            message: codeMsg_1.messages.linksendMessageEmail,
+        };
+    }
+    catch (e) {
+        console.log(e);
+    }
+});
+UserService.resetPasswordService = (req) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req === null || req === void 0 ? void 0 : req.id;
+        const { password } = req.body;
+        const hashedPassword = yield bcrypt_1.default.hash(password, 10);
+        const update_password = yield user_1.User.update({ password: hashedPassword }, { where: { id: id } });
+        return {
+            success: true,
+            status: code_1.ResponseStatus.HTTP_OK,
+            message: codeMsg_1.messages.resetPassword,
+        };
+    }
+    catch (e) {
+        console.log(e);
     }
 });

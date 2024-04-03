@@ -1,5 +1,5 @@
 import UserController from "./user.controller";
 
-module.exports= {
+export= {
     UserController
 }

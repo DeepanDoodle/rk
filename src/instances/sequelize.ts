@@ -5,8 +5,8 @@ import { dbConfig } from '../config/dbConfig'
 
 // export const sequelize = new Sequelize(dbConfig.database!, dbConfig.username!, dbConfig.password, dbConfig);
 const config: Options = {
-  username: "deepanrvdvenu@gmailcom",
-  password: "sqlpassword",
+  username:"deepanrvdvenu@gmailcom",
+  password:"sqlpassword",
   database: "rvd",
   host: "localhost",
   dialect: 'mysql'

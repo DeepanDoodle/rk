@@ -22,8 +22,8 @@ const doc = {
     securityDefinitions: {
         apiKeyAuth: {
             type: "apiKey",
-            in: "header",
-            name: "Authorization",
+            in: "header", // can be "header", "query" or "cookie"
+            name: "Authorization", // name of the header, query parameter or cookie
             description: "any description...",
         },
     },

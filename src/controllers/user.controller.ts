@@ -1,10 +1,12 @@
-import { Request, Response } from "express";
+import {Request , Response} from "express";
 import UserService from "../services/userService";
 import response from "../responses/response";
 import { ResponseStatus } from "../responseCode/code";
 export default class UserController {
   static signup: (req: Request, res: Response) => Promise<any>;
   static login: (req: Request, res: Response) => Promise<any>;
+  static forgetPasswordController: (req: Request, res: Response) => Promise<any>;
+  static resetPasswordController: (req: Request, res: Response) => Promise<any>;
 }
 
 UserController.signup = async (req: Request, res: Response) => {
@@ -81,4 +83,28 @@ UserController.login = async (req: Request, res: Response) => {
       "Login error"
     );
   }
-};
+}
+
+  UserController.forgetPasswordController = async  (req: Request, res: Response)=> {
+    try { 
+      const result = await UserService.forgetPasswordService(req);
+  
+      if (!result.success) {
+        return response.errors(req, res,result.status,result.message)
+      }
+      return response.success(req, res,result.status,null,result.message);
+    } catch (err) {
+      return response.errors(req, res,ResponseStatus.HTTP_INTERNAL_SERVER_ERROR,"internal server error")  }
+  }
+
+UserController.resetPasswordController = async (req: Request, res: Response) =>{
+  try {
+    const result = await UserService.resetPasswordService(req);
+    return response.success(req, res,result.status,null,result.message);
+  } catch (err) {
+    return response.errors(req, res,ResponseStatus.HTTP_INTERNAL_SERVER_ERROR,"internal server error")  }
+}
+
+
+
+
