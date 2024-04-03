@@ -1,0 +1,11 @@
+{
+  "apps": [
+      {
+          "name": "rk_vendor_store_management_service",
+          "script": "npm",
+          "args": "run prod",
+          "instances": 1,
+          "exec_mode": "fork"
+      }
+  ]
+}
