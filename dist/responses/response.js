@@ -10,8 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 class Response {
-    success(req_1, res_1, status_1) {
-        return __awaiter(this, arguments, void 0, function* (req, res, status, data = null, message = 'success') {
+    success(req, res, status, data = null, message = 'success') {
+        return __awaiter(this, void 0, void 0, function* () {
             try {
                 console.log('************************** Response');
                 // if (status == ResponseStatus.HTTP_OK) {

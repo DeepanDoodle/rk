@@ -22,14 +22,16 @@ class Authenticate {
 exports.Authenticate = Authenticate;
 _a = Authenticate;
 Authenticate.verifyToken = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _b, _c;
+    var _b;
     try {
-        const accessToken = ((_b = req === null || req === void 0 ? void 0 : req.headers) === null || _b === void 0 ? void 0 : _b.authorization) || ((_c = req === null || req === void 0 ? void 0 : req.params) === null || _c === void 0 ? void 0 : _c.token);
+        const accessToken = (_b = req === null || req === void 0 ? void 0 : req.params) === null || _b === void 0 ? void 0 : _b.token;
+        console.log("AT", accessToken);
         if (!accessToken) {
             return response_1.default.errors(req, res, code_1.ResponseStatus.HTTP_BAD_REQUEST, "No Access Token");
         }
         const decoded = jsonwebtoken_1.default.verify(accessToken, process.env.JWT_SECRET_KEY);
         req.id = decoded.userId;
+        next();
     }
     catch (error) {
         throw error;
