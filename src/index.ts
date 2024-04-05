@@ -19,7 +19,7 @@ import Router from "./routes";
 // import appLogger from "./utils/logger";
 
 //Database connection
-import { sequelize, verifyDBConnection } from "./instances/sequelize";
+import { sequelize1,sequelize2, verifyDBConnection } from "./instances/sequelize";
 
 import ReqResEncrypt from "./encryption/reqrescrypt";
 import Encryption from "./encryption/encrypt";
@@ -109,7 +109,7 @@ Router(app);
 //   console.log("Server is running on port", PORT);
 // });
 
-sequelize.sync()
+Promise.all([sequelize1.sync(), sequelize2.sync()])
   .then(() => {
     // Start the server after models are synchronized
     app.listen(PORT, () => {
@@ -117,5 +117,5 @@ sequelize.sync()
     });
   })
   .catch(error => {
-    console.error('Unable to connect to the database:', error);
+    console.error('Unable to synchronize models:', error);
   });

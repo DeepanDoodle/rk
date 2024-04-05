@@ -1,5 +1,5 @@
 import {  Model, DataTypes } from "sequelize";
-import { sequelize } from "../instances/sequelize";
+import { sequelize1 } from "../instances/sequelize";
 
 export class User extends Model {
   id!: number;
@@ -13,37 +13,85 @@ export class User extends Model {
 
 (User as any).init(
   {
-    id: {
-      type: DataTypes.INTEGER.UNSIGNED,
-      autoIncrement: true,
+    SUPCODE: {
+      type: DataTypes.STRING,
+      allowNull: false,
       primaryKey: true,
     },
-    userName: {
-      type: new DataTypes.STRING(128),
+    PARTY_TYP: {
+      type: DataTypes.STRING(1),
       allowNull: false,
-      unique: true,
     },
-    vendorName: {
-      type: new DataTypes.STRING(128),
+    NAME: {
+      type: new DataTypes.STRING(100),
       allowNull: true,
-      unique:true,
     },
-    email: {
-      type: new DataTypes.STRING(128),
+    ADD1: {
+      type:  DataTypes.STRING(40),
       allowNull: true,
       unique: true,
     },
-    password: {
-      type: new DataTypes.STRING(128),
-      allowNull: false,
+    ADD2: {
+        type: DataTypes.STRING(40),
+        allowNull: true,
+      },
+      ADD3: {
+        type: DataTypes.STRING(40),
+        allowNull: true,
+      },
+      ADD4: {
+        type: DataTypes.STRING(40),
+        allowNull: true,
+      },
+      ADD5: {
+        type: DataTypes.STRING(40),
+        allowNull: true,
+      },
+      COUNTRY: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      STATE: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      PINCODE: {
+        type: DataTypes.STRING(10),
+        allowNull: true,
+      },
+      ABRVAT: {
+        type: DataTypes.STRING(5),
+        allowNull: true,
+      },
+      UP_FL: {
+        type: DataTypes.STRING(1),
+        allowNull: true,
+      },
+      SRLNO: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      UPDATED: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
+      COMPCODE: {
+        type: DataTypes.STRING(3),
+        allowNull: false,
+      },
+      ACTIVE: {
+        type: DataTypes.STRING(1),
+        allowNull: true,
+      },
     },
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE,
-  },
-  {
-    tableName: "users",
-    sequelize, // passing the `sequelize` instance is required
-  }
+ 
+    {
+        sequelize: sequelize1, // Pass your Sequelize instance
+        modelName: 'User', // Name of the model
+        tableName: 'users', // Name of the table in the database
+        timestamps: false, // Disable timestamps (createdAt and updatedAt)
+      }
 );
 
-sequelize.sync();
+// sequelize1.sync();

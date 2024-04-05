@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const user_1 = require("../models/user");
+const index_1 = require("../models/index");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const generateToken_1 = require("../utils/generateToken");
 const code_1 = require("../responseCode/code");
@@ -25,7 +25,7 @@ UserService.signup = (userName, vendorName, email, password) => __awaiter(void 0
     try {
         console.log(userName, vendorName, email, password);
         console.log("inside try");
-        const existingUser = yield user_1.User.findOne({ where: { email: email } });
+        const existingUser = yield index_1.User.findOne({ where: { email: email } });
         console.log("existinguser");
         if (existingUser) {
             return { error: "Email already exists" };
@@ -33,7 +33,7 @@ UserService.signup = (userName, vendorName, email, password) => __awaiter(void 0
         console.log("eu", existingUser);
         const hashedPassword = yield bcrypt_1.default.hash(password, 10);
         console.log("hashedPassword", hashedPassword);
-        const user = yield user_1.User.create({
+        const user = yield index_1.User.create({
             userName: userName,
             vendorName: vendorName,
             email: email,
@@ -48,15 +48,19 @@ UserService.signup = (userName, vendorName, email, password) => __awaiter(void 0
 });
 UserService.login = (userName, password) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield user_1.User.findOne({ where: { userName: userName } });
+        const user = yield index_1.Account.findOne({ where: { USER: userName } });
         if (!user) {
             return { error: "User not found" };
         }
-        const passwordMatch = yield bcrypt_1.default.compare(password, user.password);
-        if (!passwordMatch) {
+        // const passwordMatch = await bcrypt.compare(password, user.password);
+        if (!password === user.password) {
             return { error: "Invalid password" };
         }
+        // if (!passwordMatch) {
+        //   return { error: "Invalid password" };
+        // }
         const accessToken = (0, generateToken_1.generateAccessToken)(user.id);
+        yield index_1.UserSession.create({});
         return { user, accessToken };
     }
     catch (error) {
@@ -66,7 +70,7 @@ UserService.login = (userName, password) => __awaiter(void 0, void 0, void 0, fu
 UserService.forgetPasswordService = (req) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email_id } = req.body;
-        const isUserExist = yield user_1.User.findOne({ where: { email: email_id } });
+        const isUserExist = yield index_1.User.findOne({ where: { email: email_id } });
         console.log(isUserExist);
         if (!isUserExist) {
             return {
@@ -92,7 +96,7 @@ UserService.resetPasswordService = (req) => __awaiter(void 0, void 0, void 0, fu
         const id = req === null || req === void 0 ? void 0 : req.id;
         const { password } = req.body;
         const hashedPassword = yield bcrypt_1.default.hash(password, 10);
-        const update_password = yield user_1.User.update({ password: hashedPassword }, { where: { id: id } });
+        const update_password = yield index_1.User.update({ password: hashedPassword }, { where: { id: id } });
         return {
             success: true,
             status: code_1.ResponseStatus.HTTP_OK,

@@ -106,7 +106,7 @@ app.use((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
 // app.listen(PORT, () => {
 //   console.log("Server is running on port", PORT);
 // });
-sequelize_1.sequelize.sync()
+Promise.all([sequelize_1.sequelize1.sync(), sequelize_1.sequelize2.sync()])
     .then(() => {
     // Start the server after models are synchronized
     app.listen(PORT, () => {
@@ -114,5 +114,5 @@ sequelize_1.sequelize.sync()
     });
 })
     .catch(error => {
-    console.error('Unable to connect to the database:', error);
+    console.error('Unable to synchronize models:', error);
 });

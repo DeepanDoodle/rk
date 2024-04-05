@@ -1,5 +1,5 @@
 import { error } from "console";
-import { User } from "../models/user";
+import {UserSession,User,Account } from "../models/index";
 import bcrypt from "bcrypt";
 import { generateAccessToken } from "../utils/generateToken";
 import { ResponseStatus } from "../responseCode/code";
@@ -57,19 +57,26 @@ UserService.signup = async (
 
 UserService.login = async (userName: string, password: string) => {
   try {
-    const user = await (User as any).findOne({ where: { userName: userName } });
+    const user = await (Account as any).findOne({ where: { USER: userName } });
 
     if (!user) {
       return { error: "User not found" };
     }
 
-    const passwordMatch = await bcrypt.compare(password, user.password);
+    // const passwordMatch = await bcrypt.compare(password, user.password);
 
-    if (!passwordMatch) {
-      return { error: "Invalid password" };
+    if(!password===user.password){
+            return { error: "Invalid password" };
+
     }
 
+    // if (!passwordMatch) {
+    //   return { error: "Invalid password" };
+    // }
+
     const accessToken = generateAccessToken(user.id);
+
+    await UserSession.create({})
 
     return { user, accessToken };
   } catch (error) {
