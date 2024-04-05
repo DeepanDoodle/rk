@@ -50,8 +50,8 @@ class Validation {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const schema = joi_1.default.object({
-                    email_id: joi_1.default.string().email().required(),
-                    password: joi_1.default.string().min(1).max(10).required(),
+                    userName: joi_1.default.string().required(),
+                    password: joi_1.default.string().required(),
                 });
                 yield schema.validateAsync(req.body);
                 next();

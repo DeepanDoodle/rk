@@ -37,8 +37,8 @@ class Validation {
   async loginValidation(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const schema = joi.object({
-        email_id: joi.string().email().required(),
-        password: joi.string().min(1).max(10).required(),
+        userName: joi.string().required(),
+        password: joi.string().required(),
       });
 
       await schema.validateAsync(req.body);

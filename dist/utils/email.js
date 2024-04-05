@@ -17,25 +17,26 @@ const generateToken_1 = require("./generateToken");
 function sendMail(email, user_id) {
     return __awaiter(this, void 0, void 0, function* () {
         const transporter = nodemailer_1.default.createTransport({
-            service: 'Gmail',
+            service: "Gmail",
             auth: {
-                user: process.env.EMAIL_ID || '',
-                pass: process.env.APP_PASSWORD || '',
+                user: process.env.EMAIL_ID || "",
+                pass: process.env.APP_PASSWORD || "",
             },
         });
         const Token = (0, generateToken_1.generateAccessToken)(user_id);
+        console.log("tk", Token);
         const mailOptions = {
-            from: process.env.EMAIL_ID || '',
+            from: process.env.EMAIL_ID || "",
             to: email,
-            subject: 'reset password',
+            subject: "reset password",
             text: `http://localhost:3000/resetPassword/${Token}`,
         };
         try {
             const info = yield transporter.sendMail(mailOptions);
-            console.log('Email sent successfully:', info);
+            console.log("Email sent successfully:", info);
         }
         catch (error) {
-            console.error('Error sending email:', error);
+            console.error("Error sending email:", error);
         }
     });
 }

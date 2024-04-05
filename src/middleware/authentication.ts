@@ -4,8 +4,8 @@ import { ResponseStatus } from "../responseCode/code";
 export class Authenticate {
   static verifyToken = async (req: any, res: any, next: any) => {
     try {
-      const accessToken = req?.headers?.authorization || req?.params?.token;
-
+      const accessToken =  req?.params?.token;
+      console.log("AT",accessToken);
       if (!accessToken) {
         return response.errors(
           req,
@@ -21,6 +21,7 @@ export class Authenticate {
       ) as { userId: number };
 
       req.id = decoded.userId;
+      next();
     } catch (error) {
       throw error;
     }
