@@ -88,7 +88,6 @@ export class User extends Model {
  
     {
         sequelize: sequelize1, // Pass your Sequelize instance
-        modelName: 'User', // Name of the model
         tableName: 'users', // Name of the table in the database
         timestamps: false, // Disable timestamps (createdAt and updatedAt)
       }

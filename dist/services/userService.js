@@ -48,20 +48,37 @@ UserService.signup = (userName, vendorName, email, password) => __awaiter(void 0
 });
 UserService.login = (userName, password) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield index_1.Account.findOne({ where: { USER: userName } });
+        const user = yield index_1.chart_slacc.findOne({ where: { USER: userName } });
+        // console.log("userrrrrrrrrr",user)
         if (!user) {
-            return { error: "User not found" };
+            return {
+                success: false,
+                status: code_1.ResponseStatus.HTTP_BAD_GATEWAY,
+                message: codeMsg_1.messages.notRegistered,
+            };
+            ;
         }
-        // const passwordMatch = await bcrypt.compare(password, user.password);
-        if (!password === user.password) {
-            return { error: "Invalid password" };
+        if (password != user.dataValues.PASSWORD) {
+            return {
+                success: false,
+                status: code_1.ResponseStatus.HTTP_BAD_GATEWAY,
+                message: codeMsg_1.messages.invalidLoginDetails,
+            };
         }
         // if (!passwordMatch) {
         //   return { error: "Invalid password" };
         // }
         const accessToken = (0, generateToken_1.generateAccessToken)(user.id);
-        yield index_1.UserSession.create({});
-        return { user, accessToken };
+        console.log("hiiiiiii", user.dataValues.SUBL_NAME, user.dataValues.SUBL_CODE);
+        const session = yield index_1.UserSession.create({ user_name: user.dataValues.SUBL_NAME, sup_code: user.dataValues.SUBL_CODE });
+        console.log(session, "////////");
+        return {
+            success: true,
+            status: code_1.ResponseStatus.HTTP_OK,
+            message: codeMsg_1.messages.linksendMessageEmail,
+            data: { user, accessToken }
+        };
+        // return { user, accessToken };
     }
     catch (error) {
         return { error: error.message };

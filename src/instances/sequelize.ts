@@ -6,18 +6,18 @@ import { dbConfig } from '../config/dbConfig'
 // export const sequelize = new Sequelize(dbConfig.database!, dbConfig.username!, dbConfig.password, dbConfig);
 const config1:Options = {
   username: "root",  password: "Rishvan3@",
-  database: "rkismaster",  host: "localhost",
+  database: "rk_master",  host: "localhost",
   dialect: 'mysql'};
 const config2: Options = {
-  username:"deepanrvdvenu@gmailcom",
-  password:"sqlpassword",
-  database: "rvd",
+  username:"root",
+  password:"Rishvan3@",
+  database: "user",
   host: "localhost",
   dialect: 'mysql'
 };
-export const sequelize1 = new Sequelize("db1", "root", "Rishvan3@", config1);
+export const sequelize1 = new Sequelize("rk_master", "root", "Rishvan3@", config1);
 
-export const sequelize2 = new Sequelize("rvd", "deepanrvdvenu@gmail.com", "sqlpassword", config2);
+export const sequelize2 = new Sequelize("user", "root", "Rishvan3@", config2);
 
 
 export const verifyDBConnection = async () => {

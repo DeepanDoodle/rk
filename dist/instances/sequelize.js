@@ -15,18 +15,18 @@ const sequelize_1 = require("sequelize");
 // export const sequelize = new Sequelize(dbConfig.database!, dbConfig.username!, dbConfig.password, dbConfig);
 const config1 = {
     username: "root", password: "Rishvan3@",
-    database: "rkismaster", host: "localhost",
+    database: "rk_master", host: "localhost",
     dialect: 'mysql'
 };
 const config2 = {
-    username: "deepanrvdvenu@gmailcom",
-    password: "sqlpassword",
-    database: "rvd",
+    username: "root",
+    password: "Rishvan3@",
+    database: "user",
     host: "localhost",
     dialect: 'mysql'
 };
-exports.sequelize1 = new sequelize_1.Sequelize("db1", "root", "Rishvan3@", config1);
-exports.sequelize2 = new sequelize_1.Sequelize("rvd", "deepanrvdvenu@gmail.com", "sqlpassword", config2);
+exports.sequelize1 = new sequelize_1.Sequelize("rk_master", "root", "Rishvan3@", config1);
+exports.sequelize2 = new sequelize_1.Sequelize("user", "root", "Rishvan3@", config2);
 const verifyDBConnection = () => __awaiter(void 0, void 0, void 0, function* () {
     // Verify Database connection
     yield Promise.all([exports.sequelize1.authenticate(), exports.sequelize2.authenticate()]);

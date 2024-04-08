@@ -12,29 +12,27 @@ UserSession.init({
         autoIncrement: true,
         primaryKey: true,
     },
-    userName: {
+    user_name: {
         type: new sequelize_1.DataTypes.STRING(128),
         allowNull: false,
-        unique: true,
     },
-    // vendorName: {
-    //   type: new DataTypes.STRING(128),
-    //   allowNull: true,
-    //   unique:true,
-    // },
-    // email: {
-    //   type: new DataTypes.STRING(128),
-    //   allowNull: true,
-    //   unique: true,
-    // },
-    // password: {
-    //   type: new DataTypes.STRING(128),
-    //   allowNull: false,
-    // },
-    loggedSession: sequelize_1.DataTypes.DATE,
+    logged_session: {
+        type: sequelize_1.DataTypes.DATE,
+        allowNull: true
+    },
+    sup_code: {
+        type: sequelize_1.DataTypes.STRING(),
+        allowNull: false
+    },
+    createdAt: sequelize_1.DataTypes.DATE,
     updatedAt: sequelize_1.DataTypes.DATE,
 }, {
     tableName: "userSession",
-    sequelize: sequelize_2.sequelize1,
+    sequelize: sequelize_2.sequelize2,
+    hooks: {
+        beforeCreate: (userSession) => {
+            userSession.logged_session = new Date();
+        },
+    },
 });
 // sequelize1.sync();

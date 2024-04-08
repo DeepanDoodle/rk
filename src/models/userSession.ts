@@ -1,12 +1,15 @@
-import {  Model, DataTypes } from "sequelize";
-import { sequelize1 } from "../instances/sequelize";
+import {  Model, DataTypes, Sequelize } from "sequelize";
+import { sequelize2 } from "../instances/sequelize";
+import { allow } from "joi";
 
 export class UserSession extends Model {
   id!: number;
-  userName!: string;
+  user_name!: string;
   vendorName!: string;
   password!: string;
   email!: string;
+  logged_session!:Date;
+  sup_code!:string
   createdAt!: Date;
   updatedAt!: Date;
 }
@@ -18,31 +21,31 @@ export class UserSession extends Model {
       autoIncrement: true,
       primaryKey: true,
     },
-    userName: {
+    user_name: {
       type: new DataTypes.STRING(128),
       allowNull: false,
-      unique: true,
     },
-    // vendorName: {
-    //   type: new DataTypes.STRING(128),
-    //   allowNull: true,
-    //   unique:true,
-    // },
-    // email: {
-    //   type: new DataTypes.STRING(128),
-    //   allowNull: true,
-    //   unique: true,
-    // },
-    // password: {
-    //   type: new DataTypes.STRING(128),
-    //   allowNull: false,
-    // },
-    loggedSession: DataTypes.DATE,
+    logged_session:{
+      type: DataTypes.DATE,
+      allowNull:true
+    },
+    sup_code:{
+      type:DataTypes.STRING(),
+      allowNull:false
+    },
+    createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
   },
   {
     tableName: "userSession",
-    sequelize:sequelize1, 
+    sequelize:sequelize2,
+    hooks: {
+      beforeCreate: (userSession: UserSession) => {
+        userSession.logged_session = new Date();
+      },
+    },
+    
+    
   }
 );
 

@@ -48,19 +48,21 @@ UserController.signup = async (req: Request, res: Response) => {
 
 UserController.login = async (req: Request, res: Response) => {
   const { userName, password } = req.body;
-
+console.log(userName)
   try {
     const result = await UserService.login(userName, password);
-
-    if (result.error) {
-      // return res.status(400).json({ error: result.error });
-      return response.errors(
-        req,
-        res,
-        ResponseStatus.HTTP_INTERNAL_SERVER_ERROR,
-        "Login error"
-      );
+    if (!result.success) {
+      return response.errors(req, res,result.status,result.message)
     }
+    // if (!result.success) {
+    //   // return res.status(400).json({ error: result.error });
+    //   return response.errors(
+    //     req,
+    //     res,
+    //     ResponseStatus.HTTP_INTERNAL_SERVER_ERROR,
+    //     "Login error"
+    //   );
+    // }
 
     const { user, accessToken } = result;
 
@@ -73,6 +75,8 @@ UserController.login = async (req: Request, res: Response) => {
       userObject,
       "Successfully LoggedIn"
     );
+    // return response.success(req, res,result.status,result.data,result.message);
+
   } catch (error) {
     console.error("Error in login controller:", error);
     // return res.status(500).json({ error: "Internal server error" });

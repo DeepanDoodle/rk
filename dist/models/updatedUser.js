@@ -1,13 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.chart_slacc = void 0;
 // Import Sequelize module and DataTypes
 const sequelize_1 = require("sequelize");
 const sequelize_2 = require("../instances/sequelize"); // Import your Sequelize instance
 // Define the User model
-class Account extends sequelize_1.Model {
+class chart_slacc extends sequelize_1.Model {
 }
+exports.chart_slacc = chart_slacc;
 // Initialize the Account model
-Account.init({
+chart_slacc.init({
     ACC_TYPE: {
         type: sequelize_1.DataTypes.CHAR(2),
         allowNull: false,
@@ -131,8 +133,6 @@ Account.init({
     },
 }, {
     sequelize: sequelize_2.sequelize1,
-    modelName: 'Account',
-    tableName: 'accounts',
+    tableName: 'chart_slacc',
     timestamps: false,
 });
-exports.default = Account;

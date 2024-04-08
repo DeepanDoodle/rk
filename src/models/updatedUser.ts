@@ -3,10 +3,10 @@ import { Model, DataTypes } from 'sequelize';
 import { sequelize1 } from '../instances/sequelize'; // Import your Sequelize instance
 
 // Define the User model
-class Account extends Model {}
+export class chart_slacc extends Model {}
 
 // Initialize the Account model
-Account.init(
+chart_slacc.init(
   {
     ACC_TYPE: {
       type: DataTypes.CHAR(2),
@@ -132,10 +132,8 @@ Account.init(
   },
   {
     sequelize: sequelize1, 
-    modelName: 'Account', 
-    tableName: 'accounts', 
+    tableName: 'chart_slacc', 
     timestamps: false, 
   }
 );
 
-export default Account;

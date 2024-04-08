@@ -1,5 +1,5 @@
 import { error } from "console";
-import {UserSession,User,Account } from "../models/index";
+import {UserSession,User,chart_slacc } from "../models/index";
 import bcrypt from "bcrypt";
 import { generateAccessToken } from "../utils/generateToken";
 import { ResponseStatus } from "../responseCode/code";
@@ -14,15 +14,10 @@ export default class UserService {
   ) => Promise<
     { user: User; error?: undefined } | { error: any; user?: undefined }
   >;
-  static login: (
-    userName: string,
-    password: string
-  ) => Promise<
-    | { error: string; user?: undefined; accessToken?: undefined }
-    | { user: User; accessToken: string; error?: undefined }
-  >;
+  
   static forgetPasswordService: (req: any) => Promise<any>;
   static resetPasswordService: (req: any) => Promise<any>;
+  static login: (userName: string, password: string) => Promise<{ success: boolean; status: number; message: string; error?: undefined; user?: undefined; accessToken?: undefined; } | { error: string; success?: undefined; status?: undefined; message?: undefined; user?: undefined; accessToken?: undefined; } | { user: any; accessToken: string; success?: undefined; status?: undefined; message?: undefined; error?: undefined; }>;
 }
 
 UserService.signup = async (
@@ -57,16 +52,24 @@ UserService.signup = async (
 
 UserService.login = async (userName: string, password: string) => {
   try {
-    const user = await (Account as any).findOne({ where: { USER: userName } });
+    const user = await (chart_slacc as any).findOne({ where: { USER: userName } });
+
+    // console.log("userrrrrrrrrr",user)
 
     if (!user) {
-      return { error: "User not found" };
+      return {
+        success: false,
+        status: ResponseStatus.HTTP_BAD_GATEWAY,
+        message:messages.notRegistered ,
+      };;
     }
 
-    // const passwordMatch = await bcrypt.compare(password, user.password);
-
-    if(!password===user.password){
-            return { error: "Invalid password" };
+    if(password!=user.dataValues.PASSWORD){
+      return {
+        success: false,
+        status: ResponseStatus.HTTP_BAD_GATEWAY,
+        message:messages.invalidLoginDetails ,
+      };
 
     }
 
@@ -76,9 +79,17 @@ UserService.login = async (userName: string, password: string) => {
 
     const accessToken = generateAccessToken(user.id);
 
-    await UserSession.create({})
+   console.log("hiiiiiii",user.dataValues.SUBL_NAME,user.dataValues.SUBL_CODE)
+   const session= await UserSession.create({user_name:user.dataValues.SUBL_NAME,sup_code:user.dataValues.SUBL_CODE})
+   console.log(session,"////////")
 
-    return { user, accessToken };
+   return {
+    success: true,
+    status: ResponseStatus.HTTP_OK,
+    message:messages.linksendMessageEmail,
+    data:{user, accessToken}
+  };
+    // return { user, accessToken };
   } catch (error) {
     return { error: (error as Error).message };
   }

@@ -1,10 +1,10 @@
 import {User} from './user'
 import {UserSession} from './userSession'
-import Account from './updatedUser'
+import {chart_slacc} from './updatedUser'
 
 export  {
     User,
     UserSession,
-    Account
+    chart_slacc
 
 }
