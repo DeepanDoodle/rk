@@ -1,30 +1,23 @@
 import { error } from "console";
-import { user } from "../models/user";
+import {UserSession,User,chart_slacc } from "../models/index";
 import bcrypt from "bcrypt";
 import { generateAccessToken } from "../utils/generateToken";
 import { ResponseStatus } from "../responseCode/code";
 import { messages } from "../config/codeMsg";
 import sendMail from "../utils/email";
 export default class UserService {
-  static forgetPasswordService: (req: any) => Promise<any>;
-  static resetPasswordService: (req: any) => Promise<any>;
-  static login: (
-    userName: string,
-    password: string
-  ) => Promise<
-    | { error: string; user_found?: undefined; accessToken?: undefined }
-    | { user_found: any; accessToken: string; error?: undefined }
-  >;
   static signup: (
     userName: string,
     vendorName: string,
     email: string,
     password: string
   ) => Promise<
-    | { error: string; usercreated?: undefined }
-    | { usercreated: any; error?: undefined }
-    | { error: Error; usercreated?: undefined }
+    { user: User; error?: undefined } | { error: any; user?: undefined }
   >;
+  
+  static forgetPasswordService: (req: any) => Promise<any>;
+  static resetPasswordService: (req: any) => Promise<any>;
+  static login: (userName: string, password: string) => Promise<{ success: boolean; status: number; message: string; error?: undefined; user?: undefined; accessToken?: undefined; } | { error: string; success?: undefined; status?: undefined; message?: undefined; user?: undefined; accessToken?: undefined; } | { user: any; accessToken: string; success?: undefined; status?: undefined; message?: undefined; error?: undefined; }>;
 }
 
 UserService.signup = async (
@@ -36,9 +29,7 @@ UserService.signup = async (
   try {
     console.log(userName, vendorName, email, password);
     console.log("inside try");
-    const existingUser = await (user as any).findOne({
-      where: { email: email },
-    });
+    const existingUser = await (User as any).findOne({ where: { email: email } });
     console.log("existinguser");
     if (existingUser) {
       return { error: "Email already exists" };
@@ -46,14 +37,14 @@ UserService.signup = async (
     console.log("eu", existingUser);
     const hashedPassword = await bcrypt.hash(password, 10);
     console.log("hashedPassword", hashedPassword);
-    const usercreated = await (user as any).create({
+    const user = await (User as any).create({
       userName: userName,
       vendorName: vendorName,
       email: email,
       password: hashedPassword,
     });
     console.log("userservice", user);
-    return { usercreated };
+    return { user };
   } catch (err) {
     return { error: err as unknown as Error };
   }
@@ -61,76 +52,91 @@ UserService.signup = async (
 
 UserService.login = async (userName: string, password: string) => {
   try {
-    const user_found = await (user as any).findOne({
-      where: { userName: userName },
-    });
+    const user = await (chart_slacc as any).findOne({ where: { USER: userName } });
 
-    if (!user_found) {
-      return { error: "User not found" };
+
+    if (!user) {
+      return {
+        success: false,
+        status: ResponseStatus.HTTP_BAD_GATEWAY,
+        message:messages.notRegistered ,
+      };;
     }
 
-    const passwordMatch = await bcrypt.compare(password, user_found.password);
+    if(password!=user.dataValues.PASSWORD){
+      return {
+        success: false,
+        status: ResponseStatus.HTTP_BAD_GATEWAY,
+        message:messages.invalidLoginDetails ,
+      };
 
-    if (!passwordMatch) {
-      return { error: "Invalid password" };
     }
 
-    const accessToken = generateAccessToken(user_found.id);
+    // if (!passwordMatch) {
+    //   return { error: "Invalid password" };
+    // }
 
-    return { user_found, accessToken };
+    const accessToken = generateAccessToken(user.dataValues.USER);
+   const session= await UserSession.create({user_name:user.dataValues.SUBL_NAME,sup_code:user.dataValues.SUBL_CODE})
+
+   return {
+    success: true,
+    status: ResponseStatus.HTTP_OK,
+    message:messages.linksendMessageEmail,
+    data:{user, accessToken}
+  };
+    // return { user, accessToken };
   } catch (error) {
     return { error: (error as Error).message };
   }
 };
 
-UserService.forgetPasswordService = async (req: any): Promise<any> => {
+UserService.forgetPasswordService = async (req: any): Promise<any>=> {
   try {
     const { email_id } = req.body;
 
-    const isUserExist = await (user as any).findOne({
-      where: { email: email_id },
-    });
-    console.log(isUserExist);
+    const isUserExist = await (User as any).findOne({ where:{email:  email_id  }});
+    console.log(isUserExist)
     if (!isUserExist) {
       return {
         success: false,
         status: ResponseStatus.HTTP_BAD_GATEWAY,
-        message: messages.notRegistered,
+        message:messages.notRegistered ,
       };
     }
 
-    const user_id: number = isUserExist.id;
+    const user_id :number= isUserExist.id; 
 
     await sendMail(email_id, user_id);
 
     return {
       success: true,
       status: ResponseStatus.HTTP_OK,
-      message: messages.linksendMessageEmail,
+      message:messages.linksendMessageEmail,
     };
   } catch (e) {
     console.log(e);
   }
-};
+}
 
-UserService.resetPasswordService = async (req: any): Promise<any> => {
+UserService.resetPasswordService =  async (req: any): Promise<any>=> {
   try {
-    const id = req?.id;
 
-    const { password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const id = req?.id
 
-    const update_password = await (user as any).update(
-      { password: hashedPassword },
-      { where: { id: id } }
+    const{password}=req.body
+    const hashedPassword = await bcrypt.hash(password,10)
+const update_password = await (User as any).update(
+      { password: hashedPassword }, 
+      { where: { id: id } } 
     );
-
+      
     return {
       success: true,
       status: ResponseStatus.HTTP_OK,
-      message: messages.resetPassword,
+      message:messages.resetPassword,
     };
   } catch (e) {
     console.log(e);
   }
-};
+}

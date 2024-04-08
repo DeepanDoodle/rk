@@ -28,12 +28,12 @@ UserController.signup = async (req: Request, res: Response) => {
       );
     }
     console.log(result);
-    console.log("user", result.usercreated);
+    console.log("user", result.user);
     return response.success(
       req,
       res,
       ResponseStatus.HTTP_CREATED,
-      result.usercreated,
+      result.user,
       "User created"
     );
   } catch (error) {
@@ -48,31 +48,35 @@ UserController.signup = async (req: Request, res: Response) => {
 
 UserController.login = async (req: Request, res: Response) => {
   const { userName, password } = req.body;
-
   try {
-    const result = await UserService.login(userName, password);
-
-    if (result.error) {
-      // return res.status(400).json({ error: result.error });
-      return response.errors(
-        req,
-        res,
-        ResponseStatus.HTTP_INTERNAL_SERVER_ERROR,
-        "Login error"
-      );
+    const result:any = await UserService.login(userName, password);
+    // console.log(result.data,"cvbnm")
+    if (!result.success) {
+      return response.errors(req, res,result.status,result.message)
     }
+    // if (!result.success) {
+    //   // return res.status(400).json({ error: result.error });
+    //   return response.errors(
+    //     req,
+    //     res,
+    //     ResponseStatus.HTTP_INTERNAL_SERVER_ERROR,
+    //     "Login error"
+    //   );
+    // }
 
-    const { user_found, accessToken } = result;
+    // const { user, accessToken } = result;
 
     // return res.status(200).json({ user, accessToken });
-    const userObject = { user_found, accessToken };
+    // const userObject = { user, accessToken };
     return response.success(
       req,
       res,
       ResponseStatus.HTTP_CREATED,
-      userObject,
+      result.data.accessToken,
       "Successfully LoggedIn"
     );
+    // return response.success(req, res,result.status,result.data,result.message);
+
   } catch (error) {
     console.error("Error in login controller:", error);
     // return res.status(500).json({ error: "Internal server error" });
@@ -104,7 +108,3 @@ UserController.resetPasswordController = async (req: Request, res: Response) =>{
   } catch (err) {
     return response.errors(req, res,ResponseStatus.HTTP_INTERNAL_SERVER_ERROR,"internal server error")  }
 }
-
-
-
-

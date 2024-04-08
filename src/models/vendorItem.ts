@@ -46,8 +46,6 @@ export class vendor_item extends Model {
     sequalize:sequelize2,
   }
 );
-vendor_item.belongsTo(po, { foreignKey: "po_number" });
-vendor_item.belongsTo(vendor_quantity, { foreignKey: "quantity_id" });
 vendor_item.belongsTo(Bill, { foreignKey: "bill_id" });
 //must map with rkstore potable
 

@@ -16,7 +16,7 @@ export class vendor_quantity extends Model {
 
 (vendor_quantity as any).init(
   {
-    id: {
+    _id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,

@@ -36,16 +36,30 @@ UserController.signup = (req, res) => __awaiter(void 0, void 0, void 0, function
 });
 UserController.login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { userName, password } = req.body;
+    console.log(userName);
     try {
         const result = yield userService_1.default.login(userName, password);
-        if (result.error) {
-            // return res.status(400).json({ error: result.error });
-            return response_1.default.errors(req, res, code_1.ResponseStatus.HTTP_INTERNAL_SERVER_ERROR, "Login error");
+        if (!result.success) {
+            return response_1.default.errors(req, res, result.status, result.message);
         }
+<<<<<<< HEAD
         const { user_found, accessToken } = result;
+=======
+        // if (!result.success) {
+        //   // return res.status(400).json({ error: result.error });
+        //   return response.errors(
+        //     req,
+        //     res,
+        //     ResponseStatus.HTTP_INTERNAL_SERVER_ERROR,
+        //     "Login error"
+        //   );
+        // }
+        const { user, accessToken } = result;
+>>>>>>> 412b12b5a39d711210a2f0defbd463fca5ce25e5
         // return res.status(200).json({ user, accessToken });
         const userObject = { user_found, accessToken };
         return response_1.default.success(req, res, code_1.ResponseStatus.HTTP_CREATED, userObject, "Successfully LoggedIn");
+        // return response.success(req, res,result.status,result.data,result.message);
     }
     catch (error) {
         console.error("Error in login controller:", error);

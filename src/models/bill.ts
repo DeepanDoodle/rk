@@ -49,8 +49,8 @@ export class Bill extends Model {
   }
 );
 
-Bill.belongsTo(vendor_item, { foreignKey: "vendor_item_id" });
-Bill.belongsTo(vendor_quantity, { foreignKey: "vendor_quantity_id" });
+// Bill.belongsTo(vendor_item, { foreignKey: "vendor_item_id" });
+// Bill.belongsTo(vendor_quantity, { foreignKey: "vendor_quantity_id" });
 
 // sequelize.sync();
 sequelize2.sync({ logging: console.log });
