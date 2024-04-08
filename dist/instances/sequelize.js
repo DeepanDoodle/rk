@@ -9,20 +9,35 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.verifyDBConnection = exports.sequelize = void 0;
+exports.verifyDBConnection = exports.sequelize3 = exports.sequelize2 = exports.sequelize1 = void 0;
 // import * as Sequelize from 'sequelize'
 const sequelize_1 = require("sequelize");
 // export const sequelize = new Sequelize(dbConfig.database!, dbConfig.username!, dbConfig.password, dbConfig);
-const config = {
+const config1 = {
     username: "deepanrvdvenu@gmailcom",
     password: "sqlpassword",
-    database: "rvd",
+    database: "rkmaster",
     host: "localhost",
-    dialect: 'mysql'
+    dialect: "mysql",
 };
-exports.sequelize = new sequelize_1.Sequelize("rvd", "deepanrvdvenu@gmail.com", "sqlpassword", config);
+const config2 = {
+    username: "deepanrvdvenu@gmailcom",
+    password: "sqlpassword",
+    database: "user",
+    host: "localhost",
+    dialect: "mysql",
+};
+const config3 = {
+    username: "deepanrvdvenu@gmailcom",
+    password: "sqlpassword",
+    database: "rkstore",
+    host: "localhost",
+    dialect: "mysql",
+};
+exports.sequelize1 = new sequelize_1.Sequelize("rk_master", "deepanrvdvenu@gmail.com", "sqlpassword", config1);
+exports.sequelize2 = new sequelize_1.Sequelize("user", "deepanrvdvenu@gmail.com", "sqlpassword", config2);
+exports.sequelize3 = new sequelize_1.Sequelize("rkstore", "deepanrvdvenu@gmail.com", "sqlpassword", config3);
 const verifyDBConnection = () => __awaiter(void 0, void 0, void 0, function* () {
-    // Verify Database connection
-    return yield exports.sequelize.authenticate();
+    yield Promise.all([exports.sequelize1.authenticate(), exports.sequelize2.authenticate()]);
 });
 exports.verifyDBConnection = verifyDBConnection;

@@ -19,7 +19,7 @@ import Router from "./routes";
 // import appLogger from "./utils/logger";
 
 //Database connection
-import { sequelize, verifyDBConnection } from "./instances/sequelize";
+import {  sequelize1, sequelize2, sequelize3, verifyDBConnection } from "./instances/sequelize";
 
 import ReqResEncrypt from "./encryption/reqrescrypt";
 import Encryption from "./encryption/encrypt";
@@ -29,6 +29,7 @@ import Encryption from "./encryption/encrypt";
 import swaggerUi from "swagger-ui-express";
 import swaggerDocument from "./swagger.json";
 import initializeRoutes from "./routes";
+import { any } from "joi";
 // dotenv.config();
 //PORT
 // const PORT = process.env.PORT;
@@ -109,7 +110,7 @@ Router(app);
 //   console.log("Server is running on port", PORT);
 // });
 
-sequelize.sync()
+Promise.all([sequelize1.sync(), sequelize2.sync(), sequelize3.sync()])
   .then(() => {
     // Start the server after models are synchronized
     app.listen(PORT, () => {
@@ -117,5 +118,5 @@ sequelize.sync()
     });
   })
   .catch(error => {
-    console.error('Unable to connect to the database:', error);
+    console.error('Unable to synchronize models:', error);
   });

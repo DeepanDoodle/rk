@@ -28,12 +28,12 @@ UserController.signup = async (req: Request, res: Response) => {
       );
     }
     console.log(result);
-    console.log("user", result.user);
+    console.log("user", result.usercreated);
     return response.success(
       req,
       res,
       ResponseStatus.HTTP_CREATED,
-      result.user,
+      result.usercreated,
       "User created"
     );
   } catch (error) {
@@ -62,10 +62,10 @@ UserController.login = async (req: Request, res: Response) => {
       );
     }
 
-    const { user, accessToken } = result;
+    const { user_found, accessToken } = result;
 
     // return res.status(200).json({ user, accessToken });
-    const userObject = { user, accessToken };
+    const userObject = { user_found, accessToken };
     return response.success(
       req,
       res,
