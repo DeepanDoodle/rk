@@ -1,22 +1,22 @@
 import { error } from "console";
-import { UserSession, User, chart_slacc } from "../models/index";
+import { UserSession, chart_slacc } from "../models/index";
 import bcrypt from "bcrypt";
 import { generateAccessToken } from "../utils/generateToken";
 import { ResponseStatus } from "../responseCode/code";
 import { messages } from "../config/codeMsg";
 import sendMail from "../utils/email";
 export default class UserService {
-  static signup: (
-    userName: string,
-    vendorName: string,
-    email: string,
-    password: string
-  ) => Promise<
-    { user: User; error?: undefined } | { error: any; user?: undefined }
-  >;
+  // static signup: (
+  //   userName: string,
+  //   vendorName: string,
+  //   email: string,
+  //   password: string
+  // ) => Promise<
+  //   { user: User; error?: undefined } | { error: any; user?: undefined }
+  // >;
 
-  static forgetPasswordService: (req: any) => Promise<any>;
-  static resetPasswordService: (req: any) => Promise<any>;
+  // static forgetPasswordService: (req: any) => Promise<any>;
+  // static resetPasswordService: (req: any) => Promise<any>;
   static login: (
     userName: string,
     password: string
@@ -48,52 +48,53 @@ export default class UserService {
   >;
 }
 
-UserService.signup = async (
-  userName: string,
-  vendorName: string,
-  email: string,
-  password: string
-) => {
-  try {
-    console.log(userName, vendorName, email, password);
-    console.log("inside try");
-    const existingUser = await (User as any).findOne({
-      where: { email: email },
-    });
-    console.log("existinguser");
-    if (existingUser) {
-      return { error: "Email already exists" };
-    }
-    console.log("eu", existingUser);
-    const hashedPassword = await bcrypt.hash(password, 10);
-    console.log("hashedPassword", hashedPassword);
-    const user = await (User as any).create({
-      userName: userName,
-      vendorName: vendorName,
-      email: email,
-      password: hashedPassword,
-    });
-    console.log("userservice", user);
-    return { user };
-  } catch (err) {
-    return { error: err as unknown as Error };
-  }
-};
+// UserService.signup = async (
+//   userName: string,
+//   vendorName: string,
+//   email: string,
+//   password: string
+// ) => {
+//   try {
+//     console.log(userName, vendorName, email, password);
+//     console.log("inside try");
+//     const existingUser = await (User as any).findOne({
+//       where: { email: email },
+//     });
+//     console.log("existinguser");
+//     if (existingUser) {
+//       return { error: "Email already exists" };
+//     }
+//     console.log("eu", existingUser);
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     console.log("hashedPassword", hashedPassword);
+//     const user = await (User as any).create({
+//       userName: userName,
+//       vendorName: vendorName,
+//       email: email,
+//       password: hashedPassword,
+//     });
+//     console.log("userservice", user);
+//     return { user };
+//   } catch (err) {
+//     return { error: err as unknown as Error };
+//   }
+// };
 
 UserService.login = async (userName: string, password: string) => {
+  console.log("hiiiiiiiiii")
   try {
     const user = await (chart_slacc as any).findOne({
       where: { USER: userName },
     });
-
+    console.log("user",user);
     if (!user) {
       return {
         success: false,
-        status: ResponseStatus.HTTP_BAD_GATEWAY,
+        status: ResponseStatus.HTTP_BAD_REQUEST,
         message: messages.notRegistered,
       };
     }
-
+    console.log("above password")
     if (password !== user.dataValues.PASSWORD) {
       return {
         success: false,
@@ -101,11 +102,15 @@ UserService.login = async (userName: string, password: string) => {
         message: messages.invalidLoginDetails,
       };
     }
+    console.log("below password")
 
+    
     // Check if the user has an existing session
     let session = await UserSession.findOne({
       where: { user_name: user.dataValues.SUBL_NAME },
     });
+
+    console.log("session finding")
 
     if (!session) {
       session = await UserSession.create({
@@ -116,7 +121,7 @@ UserService.login = async (userName: string, password: string) => {
     } else {
       await session.increment("noOftimesLoggedin");
     }
-
+    console.log("created")
     const accessToken = generateAccessToken(user.dataValues.USER);
 
     return {
@@ -130,53 +135,53 @@ UserService.login = async (userName: string, password: string) => {
   }
 };
 
-UserService.forgetPasswordService = async (req: any): Promise<any> => {
-  try {
-    const { email_id } = req.body;
+// UserService.forgetPasswordService = async (req: any): Promise<any> => {
+//   try {
+//     const { email_id } = req.body;
 
-    const isUserExist = await (User as any).findOne({
-      where: { email: email_id },
-    });
-    console.log(isUserExist);
-    if (!isUserExist) {
-      return {
-        success: false,
-        status: ResponseStatus.HTTP_BAD_GATEWAY,
-        message: messages.notRegistered,
-      };
-    }
+//     const isUserExist = await (User as any).findOne({
+//       where: { email: email_id },
+//     });
+//     console.log(isUserExist);
+//     if (!isUserExist) {
+//       return {
+//         success: false,
+//         status: ResponseStatus.HTTP_BAD_GATEWAY,
+//         message: messages.notRegistered,
+//       };
+//     }
 
-    const user_id: number = isUserExist.id;
+//     const user_id: number = isUserExist.id;
 
-    await sendMail(email_id, user_id);
+//     await sendMail(email_id, user_id);
 
-    return {
-      success: true,
-      status: ResponseStatus.HTTP_OK,
-      message: messages.linksendMessageEmail,
-    };
-  } catch (e) {
-    console.log(e);
-  }
-};
+//     return {
+//       success: true,
+//       status: ResponseStatus.HTTP_OK,
+//       message: messages.linksendMessageEmail,
+//     };
+//   } catch (e) {
+//     console.log(e);
+//   }
+// };
 
-UserService.resetPasswordService = async (req: any): Promise<any> => {
-  try {
-    const id = req?.id;
+// UserService.resetPasswordService = async (req: any): Promise<any> => {
+//   try {
+//     const id = req?.id;
 
-    const { password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const update_password = await (User as any).update(
-      { password: hashedPassword },
-      { where: { id: id } }
-    );
+//     const { password } = req.body;
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     const update_password = await (User as any).update(
+//       { password: hashedPassword },
+//       { where: { id: id } }
+//     );
 
-    return {
-      success: true,
-      status: ResponseStatus.HTTP_OK,
-      message: messages.resetPassword,
-    };
-  } catch (e) {
-    console.log(e);
-  }
-};
+//     return {
+//       success: true,
+//       status: ResponseStatus.HTTP_OK,
+//       message: messages.resetPassword,
+//     };
+//   } catch (e) {
+//     console.log(e);
+//   }
+// };

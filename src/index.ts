@@ -19,7 +19,7 @@ import Router from "./routes";
 // import appLogger from "./utils/logger";
 
 //Database connection
-import { sequelize1,sequelize2, verifyDBConnection } from "./instances/sequelize";
+import { sequelize1,sequelize2,sequelize3, verifyDBConnection } from "./instances/sequelize";
 
 import ReqResEncrypt from "./encryption/reqrescrypt";
 import Encryption from "./encryption/encrypt";
@@ -52,7 +52,10 @@ app.use(express.static("public"));
 app.use(express.text());
 app.use(express.raw());
 app.use(helmet());
-app.use(cors());
+const corsOptions = {
+  origin: 'http://localhost:3000',
+};
+app.use(cors(corsOptions));
 app.use(compression());
 
 //Logger
@@ -110,7 +113,7 @@ Router(app);
 //   console.log("Server is running on port", PORT);
 // });
 
-Promise.all([sequelize1.sync(), sequelize2.sync()])
+Promise.all([sequelize1.sync(), sequelize2.sync(),sequelize3.sync()])
   .then(() => {
     // Start the server after models are synchronized
     app.listen(PORT, () => {

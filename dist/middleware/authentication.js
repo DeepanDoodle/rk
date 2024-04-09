@@ -24,7 +24,9 @@ _a = Authenticate;
 Authenticate.verifyToken = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _b;
     try {
-        const accessToken = (_b = req === null || req === void 0 ? void 0 : req.params) === null || _b === void 0 ? void 0 : _b.token;
+        const authHeader = req.headers['authorization'];
+        const token = authHeader.split(' ')[1];
+        const accessToken = token || ((_b = req === null || req === void 0 ? void 0 : req.params) === null || _b === void 0 ? void 0 : _b.token);
         console.log("AT", accessToken);
         if (!accessToken) {
             return response_1.default.errors(req, res, code_1.ResponseStatus.HTTP_BAD_REQUEST, "No Access Token");

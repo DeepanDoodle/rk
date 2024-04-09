@@ -22,7 +22,7 @@ attachments.init({
     bill_id: sequelize_1.DataTypes.INTEGER,
 }, {
     tableName: "attachments",
-    sequalize: sequelize_2.sequelize2,
+    sequelize: sequelize_2.sequelize2,
 });
 attachments.belongsTo(bill_1.Bill, { foreignKey: "bill_id" });
 sequelize_2.sequelize2.sync({ logging: console.log });

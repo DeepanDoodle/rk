@@ -18,7 +18,6 @@ export class Bill extends Model {
   public dc_number!: string ;
   public vendor_item_id!: number;
   public vendor_quantity_id!: number;
-  public attachments: Blob | undefined;
 }
 
 (Bill as any).init(
@@ -39,18 +38,16 @@ export class Bill extends Model {
     currency: DataTypes.STRING,
     ewb_number: DataTypes.STRING,
     dc_number: DataTypes.STRING,
-    vendor_item_id: DataTypes.NUMBER,
-    vendor_quantity_id: DataTypes.NUMBER,
-    attachments: DataTypes.BLOB,
+    vendor_item_id: DataTypes.INTEGER,
+    vendor_quantity_id: DataTypes.INTEGER,
   },
   {
     tableName: "bill",
-    sequalize:sequelize2,
+    sequelize:sequelize2,
   }
 );
 
-// Bill.belongsTo(vendor_item, { foreignKey: "vendor_item_id" });
-// Bill.belongsTo(vendor_quantity, { foreignKey: "vendor_quantity_id" });
+
 
 // sequelize.sync();
 sequelize2.sync({ logging: console.log });

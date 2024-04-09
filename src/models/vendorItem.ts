@@ -27,13 +27,13 @@ export class vendor_item extends Model {
       primaryKey: true,
       autoIncrement: true,
     },
-    po_number: DataTypes.NUMBER,
-    item_code: DataTypes.NUMBER,
+    po_number: DataTypes.INTEGER,
+    item_code: DataTypes.INTEGER,
     description: DataTypes.STRING,
-    balance_to_supply: DataTypes.NUMBER,
+    balance_to_supply: DataTypes.INTEGER,
     uom: DataTypes.STRING,
     quantity: DataTypes.INTEGER,
-    quantity_id: DataTypes.NUMBER,
+    quantity_id: DataTypes.INTEGER,
     unit_price: DataTypes.FLOAT,
     value: DataTypes.FLOAT,
     gst_per: DataTypes.FLOAT,
@@ -43,7 +43,7 @@ export class vendor_item extends Model {
   },
   {
     tableName: "vendor_item",
-    sequalize:sequelize2,
+    sequelize:sequelize2,
   }
 );
 vendor_item.belongsTo(Bill, { foreignKey: "bill_id" });

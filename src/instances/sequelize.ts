@@ -15,7 +15,7 @@ const config1: Options = {
 const config2: Options = {
   username: "deepanrvdvenu@gmailcom",
   password: "sqlpassword",
-  database: "user",
+  database: "rvd",
   host: "localhost",
   dialect: "mysql",
 };
@@ -29,14 +29,14 @@ const config3: Options = {
 };
 
 export const sequelize1 = new Sequelize(
-  "rk_master",
+  "rkmaster",
   "deepanrvdvenu@gmail.com",
   "sqlpassword",
   config1
 );
 
 export const sequelize2 = new Sequelize(
-  "user",
+  "rvd",
   "deepanrvdvenu@gmail.com",
   "sqlpassword",
   config2
@@ -50,5 +50,5 @@ export const sequelize3 = new Sequelize(
 );
 
 export const verifyDBConnection = async () => {
-  await Promise.all([sequelize1.authenticate(), sequelize2.authenticate()]);
+  await Promise.all([sequelize1.authenticate(), sequelize2.authenticate(),sequelize3.authenticate()]);
 };

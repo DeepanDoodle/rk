@@ -1,0 +1,79 @@
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const index_1 = require("../models/index");
+const code_1 = require("../responseCode/code");
+const codeMsg_1 = require("../config/codeMsg");
+class billService {
+}
+exports.default = billService;
+billService.supplierName = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const user = yield index_1.chart_slacc.findOne({
+            where: { SUBL_CODE: id },
+        });
+        return {
+            success: true,
+            status: code_1.ResponseStatus.HTTP_OK,
+            message: codeMsg_1.messages.dataFetched,
+            data: user.dataValues.SUBL_NAME,
+        };
+    }
+    catch (e) {
+        return {
+            success: false,
+            status: code_1.ResponseStatus.HTTP_BAD_GATEWAY,
+            message: codeMsg_1.messages.noRecord,
+        };
+    }
+});
+billService.typeOfRawMaterials = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const itemObject = yield index_1.mcat.findAll({
+            attributes: ["MCATDESC"],
+        });
+        const materials = itemObject.map((record) => record.MCATDESC);
+        return {
+            success: true,
+            status: code_1.ResponseStatus.HTTP_OK,
+            message: codeMsg_1.messages.dataFetched,
+            data: materials,
+        };
+    }
+    catch (e) {
+        return {
+            success: false,
+            status: code_1.ResponseStatus.HTTP_BAD_GATEWAY,
+            message: codeMsg_1.messages.noRecord,
+        };
+    }
+});
+billService.currency = () => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const records = yield index_1.currency.findAll({
+            attributes: ["FST_NAME"],
+        });
+        const currencies = records.map((record) => record.FST_NAME);
+        return {
+            success: true,
+            status: code_1.ResponseStatus.HTTP_OK,
+            message: codeMsg_1.messages.dataFetched,
+            data: currencies,
+        };
+    }
+    catch (e) {
+        return {
+            success: false,
+            status: code_1.ResponseStatus.HTTP_BAD_GATEWAY,
+            message: codeMsg_1.messages.noRecord,
+        };
+    }
+});

@@ -2,15 +2,13 @@ import { Model, DataTypes } from "sequelize";
 import { sequelize2 } from "../instances/sequelize";
 import { Bill } from "./bill";
 
-
 export class attachments extends Model {
   public _id!: number;
-  public invoice?: Buffer;
-  public packing_list?: Buffer;
-  public transport_document?: Buffer;
-  public e_way_bill?: Buffer;
-  public attachments?: Buffer;
-  public arrayOfDocuments?: any[]; 
+  public invoice?: string;
+  public packing_list?: string;
+  public transport_document?: string;
+  public e_way_bill?: string;
+  public array_of_documents?: any[];
   public bill_id?: number;
 }
 
@@ -21,21 +19,19 @@ export class attachments extends Model {
       primaryKey: true,
       autoIncrement: true,
     },
-   invoice:DataTypes.BLOB,
-   packing_list :DataTypes.BLOB,
-   transport_document: DataTypes.BLOB,
-   e_way_bill : DataTypes.BLOB,
-    attachments: DataTypes.BLOB,
-    arrayOfDocuments: DataTypes.JSON, 
+    invoice: DataTypes.STRING,
+    packing_list: DataTypes.STRING,
+    transport_document: DataTypes.STRING,
+    e_way_bill: DataTypes.STRING,
+    array_of_documents: DataTypes.JSON,
     bill_id: DataTypes.INTEGER,
-
   },
   {
     tableName: "attachments",
-    sequalize:sequelize2,
+    sequelize: sequelize2,
   }
 );
 
-attachments.belongsTo(Bill,{foreignKey:"bill_id"})
+attachments.belongsTo(Bill, { foreignKey: "bill_id" });
 
 sequelize2.sync({ logging: console.log });

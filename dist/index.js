@@ -106,7 +106,7 @@ app.use((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
 // app.listen(PORT, () => {
 //   console.log("Server is running on port", PORT);
 // });
-Promise.all([sequelize_1.sequelize1.sync(), sequelize_1.sequelize2.sync()])
+Promise.all([sequelize_1.sequelize1.sync(), sequelize_1.sequelize2.sync(), sequelize_1.sequelize3.sync()])
     .then(() => {
     // Start the server after models are synchronized
     app.listen(PORT, () => {

@@ -4,4 +4,5 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const userService_1 = __importDefault(require("./userService"));
-module.exports = { UserService: userService_1.default };
+const billService_1 = __importDefault(require("./billService"));
+module.exports = { UserService: userService_1.default, billService: billService_1.default };

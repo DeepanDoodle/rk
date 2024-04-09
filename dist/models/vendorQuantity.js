@@ -9,7 +9,7 @@ class vendor_quantity extends sequelize_1.Model {
 }
 exports.vendor_quantity = vendor_quantity;
 vendor_quantity.init({
-    id: {
+    _id: {
         type: sequelize_1.DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
@@ -23,7 +23,7 @@ vendor_quantity.init({
     barcode: sequelize_1.DataTypes.STRING,
 }, {
     tableName: "vendor_quantity",
-    sequelize2: sequelize_2.sequelize2,
+    sequelize: sequelize_2.sequelize2,
 });
 vendor_quantity.belongsTo(vendorItem_1.vendor_item, { foreignKey: "vendor_item_id" });
 vendor_quantity.belongsTo(bill_1.Bill, { foreignKey: "bill_id" });

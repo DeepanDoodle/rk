@@ -18,11 +18,16 @@ UserSession.init({
     },
     logged_session: {
         type: sequelize_1.DataTypes.DATE,
-        allowNull: true
+        allowNull: true,
     },
     sup_code: {
         type: sequelize_1.DataTypes.STRING(),
-        allowNull: false
+        allowNull: false,
+    },
+    no_of_times_loggedIn: {
+        type: sequelize_1.DataTypes.INTEGER(),
+        allowNull: false,
+        defaultValue: 0,
     },
     createdAt: sequelize_1.DataTypes.DATE,
     updatedAt: sequelize_1.DataTypes.DATE,
