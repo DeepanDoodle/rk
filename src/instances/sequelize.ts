@@ -1,27 +1,54 @@
 // import * as Sequelize from 'sequelize'
-import { Options, Sequelize } from 'sequelize';
+import { Options, Sequelize } from "sequelize";
 
-import { dbConfig } from '../config/dbConfig'
+import { dbConfig } from "../config/dbConfig";
 
 // export const sequelize = new Sequelize(dbConfig.database!, dbConfig.username!, dbConfig.password, dbConfig);
-const config1:Options = {
-  username: "root",  password: "Rishvan3@",
-  database: "rk_master",  host: "localhost",
-  dialect: 'mysql'};
+const config1: Options = {
+  username: "deepanrvdvenu@gmailcom",
+  password: "sqlpassword",
+  database: "rkmaster",
+  host: "localhost",
+  dialect: "mysql",
+};
+
 const config2: Options = {
-  username:"root",
-  password:"Rishvan3@",
+  username: "deepanrvdvenu@gmailcom",
+  password: "sqlpassword",
   database: "user",
   host: "localhost",
-  dialect: 'mysql'
+  dialect: "mysql",
 };
-export const sequelize1 = new Sequelize("rk_master", "root", "Rishvan3@", config1);
 
-export const sequelize2 = new Sequelize("user", "root", "Rishvan3@", config2);
+const config3: Options = {
+  username: "deepanrvdvenu@gmailcom",
+  password: "sqlpassword",
+  database: "rkstore",
+  host: "localhost",
+  dialect: "mysql",
+};
 
+export const sequelize1 = new Sequelize(
+  "rk_master",
+  "deepanrvdvenu@gmail.com",
+  "sqlpassword",
+  config1
+);
+
+export const sequelize2 = new Sequelize(
+  "user",
+  "deepanrvdvenu@gmail.com",
+  "sqlpassword",
+  config2
+);
+
+export const sequelize3 = new Sequelize(
+  "rkstore",
+  "deepanrvdvenu@gmail.com",
+  "sqlpassword",
+  config3
+);
 
 export const verifyDBConnection = async () => {
-  // Verify Database connection
- await Promise.all([ sequelize1.authenticate(), sequelize2.authenticate()])
-
+  await Promise.all([sequelize1.authenticate(), sequelize2.authenticate()]);
 };

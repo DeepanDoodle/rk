@@ -1,5 +1,6 @@
 import UserController from "./user.controller";
-
-export= {
-    UserController
-}
+import billController from "./bill.controller";
+export = {
+  UserController,
+  billController,
+};

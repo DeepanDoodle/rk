@@ -108,7 +108,3 @@ UserController.resetPasswordController = async (req: Request, res: Response) =>{
   } catch (err) {
     return response.errors(req, res,ResponseStatus.HTTP_INTERNAL_SERVER_ERROR,"internal server error")  }
 }
-
-
-
-

@@ -1,3 +1,3 @@
 import UserService from "./userService";
-
-module.exports={UserService}
+import billService from "./billService";
+module.exports = { UserService, billService };
