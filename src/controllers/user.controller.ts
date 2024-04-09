@@ -48,9 +48,9 @@ UserController.signup = async (req: Request, res: Response) => {
 
 UserController.login = async (req: Request, res: Response) => {
   const { userName, password } = req.body;
-console.log(userName)
   try {
-    const result = await UserService.login(userName, password);
+    const result:any = await UserService.login(userName, password);
+    // console.log(result.data,"cvbnm")
     if (!result.success) {
       return response.errors(req, res,result.status,result.message)
     }
@@ -64,15 +64,15 @@ console.log(userName)
     //   );
     // }
 
-    const { user, accessToken } = result;
+    // const { user, accessToken } = result;
 
     // return res.status(200).json({ user, accessToken });
-    const userObject = { user, accessToken };
+    // const userObject = { user, accessToken };
     return response.success(
       req,
       res,
       ResponseStatus.HTTP_CREATED,
-      userObject,
+      result.data.accessToken,
       "Successfully LoggedIn"
     );
     // return response.success(req, res,result.status,result.data,result.message);

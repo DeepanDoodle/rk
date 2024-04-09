@@ -122,7 +122,7 @@ chart_slacc.init(
       allowNull: true,
     },
     ATTACHMENT_COMMENTS: {
-      type: DataTypes.TEXT,
+      type: DataTypes.TEXT,  
       allowNull: true,
     },
     copy_flag: {

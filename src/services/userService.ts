@@ -54,7 +54,6 @@ UserService.login = async (userName: string, password: string) => {
   try {
     const user = await (chart_slacc as any).findOne({ where: { USER: userName } });
 
-    // console.log("userrrrrrrrrr",user)
 
     if (!user) {
       return {
@@ -77,11 +76,8 @@ UserService.login = async (userName: string, password: string) => {
     //   return { error: "Invalid password" };
     // }
 
-    const accessToken = generateAccessToken(user.id);
-
-   console.log("hiiiiiii",user.dataValues.SUBL_NAME,user.dataValues.SUBL_CODE)
+    const accessToken = generateAccessToken(user.dataValues.USER);
    const session= await UserSession.create({user_name:user.dataValues.SUBL_NAME,sup_code:user.dataValues.SUBL_CODE})
-   console.log(session,"////////")
 
    return {
     success: true,
