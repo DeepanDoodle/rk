@@ -54,7 +54,7 @@ po.init({
     },
 }, {
     sequelize: sequelize_2.sequelize3,
-    tableName: "purchase_order",
+    tableName: "purchase_order", // Set the table name explicitly
     timestamps: false, // Disable timestamps columns (createdAt, updatedAt)
 });
 // Export the po model

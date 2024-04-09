@@ -39,13 +39,13 @@ export class Bill extends Model {
     currency: DataTypes.STRING,
     ewb_number: DataTypes.STRING,
     dc_number: DataTypes.STRING,
-    vendor_item_id: DataTypes.NUMBER,
-    vendor_quantity_id: DataTypes.NUMBER,
+    vendor_item_id: DataTypes.INTEGER,
+    vendor_quantity_id: DataTypes.INTEGER,
     attachments: DataTypes.BLOB,
   },
   {
     tableName: "bill",
-    sequalize:sequelize2,
+    sequelize:sequelize2,
   }
 );
 

@@ -32,7 +32,7 @@ export class attachments extends Model {
   },
   {
     tableName: "attachments",
-    sequalize:sequelize2,
+    sequelize:sequelize2,
   }
 );
 

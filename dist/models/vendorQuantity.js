@@ -9,21 +9,30 @@ class vendor_quantity extends sequelize_1.Model {
 }
 exports.vendor_quantity = vendor_quantity;
 vendor_quantity.init({
-    id: {
+    _id: {
         type: sequelize_1.DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
-    pkl_number: sequelize_1.DataTypes.NUMBER,
-    bale_number: sequelize_1.DataTypes.NUMBER,
-    quantity: sequelize_1.DataTypes.NUMBER,
+    pkl_number: sequelize_1.DataTypes.INTEGER,
+    bale_number: sequelize_1.DataTypes.INTEGER,
+    quantity: sequelize_1.DataTypes.INTEGER,
     remarks: sequelize_1.DataTypes.STRING,
-    vendor_item_id: sequelize_1.DataTypes.STRING,
-    bill_id: sequelize_1.DataTypes.NUMBER,
-    barcode: sequelize_1.DataTypes.STRING,
+    vendor_item_id: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: true,
+    },
+    bill_id: {
+        type: sequelize_1.DataTypes.INTEGER,
+        allowNull: true,
+    },
+    barcode: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
+    },
 }, {
     tableName: "vendor_quantity",
-    sequelize2: sequelize_2.sequelize2,
+    sequelize: sequelize_2.sequelize2,
 });
 vendor_quantity.belongsTo(vendorItem_1.vendor_item, { foreignKey: "vendor_item_id" });
 vendor_quantity.belongsTo(bill_1.Bill, { foreignKey: "bill_id" });

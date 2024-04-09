@@ -1,23 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.user = void 0;
+exports.User = void 0;
 const sequelize_1 = require("sequelize");
 const sequelize_2 = require("../instances/sequelize");
-class user extends sequelize_1.Model {
+class User extends sequelize_1.Model {
 }
-<<<<<<< HEAD
-exports.user = user;
-user.init({
-    id: {
-        type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
-        autoIncrement: true,
-=======
 exports.User = User;
 User.init({
     SUPCODE: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
->>>>>>> 412b12b5a39d711210a2f0defbd463fca5ce25e5
         primaryKey: true,
     },
     PARTY_TYP: {
@@ -91,9 +83,4 @@ User.init({
     tableName: 'users', // Name of the table in the database
     timestamps: false, // Disable timestamps (createdAt and updatedAt)
 });
-<<<<<<< HEAD
-// sequelize.sync();
-sequelize_2.sequelize.sync({ logging: console.log });
-=======
 // sequelize1.sync();
->>>>>>> 412b12b5a39d711210a2f0defbd463fca5ce25e5

@@ -21,17 +21,26 @@ export class vendor_quantity extends Model {
       primaryKey: true,
       autoIncrement: true,
     },
-    pkl_number: DataTypes.NUMBER,
-    bale_number: DataTypes.NUMBER,
-    quantity: DataTypes.NUMBER,
+    pkl_number: DataTypes.INTEGER,
+    bale_number: DataTypes.INTEGER,
+    quantity: DataTypes.INTEGER,
     remarks: DataTypes.STRING,
-    vendor_item_id:DataTypes.STRING,
-    bill_id: DataTypes.NUMBER,
-    barcode : DataTypes.STRING,
+    vendor_item_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true, 
+    },
+    bill_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true, 
+    },
+    barcode: {
+      type: DataTypes.STRING,
+      allowNull: true, 
+    },
   },
   {
     tableName: "vendor_quantity",
-    sequelize2,
+    sequelize:sequelize2,
   }
 );
 

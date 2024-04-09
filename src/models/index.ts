@@ -8,6 +8,7 @@ import po from "./po";
 import { vendor_item } from "./vendorItem";
 import { vendor_quantity } from "./vendorQuantity";
 import { User } from "./user";
+import {balanceToSupply} from "./balanceToSupply"
 
 export {
   UserSession,
@@ -18,5 +19,6 @@ export {
   po,
   vendor_item,
   vendor_quantity,
-  User
+  User,
+  balanceToSupply
 };

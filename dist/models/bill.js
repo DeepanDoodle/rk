@@ -3,8 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Bill = void 0;
 const sequelize_1 = require("sequelize");
 const sequelize_2 = require("../instances/sequelize");
-const vendorItem_1 = require("./vendorItem");
-const vendorQuantity_1 = require("./vendorQuantity");
 class Bill extends sequelize_1.Model {
 }
 exports.Bill = Bill;
@@ -25,14 +23,14 @@ Bill.init({
     currency: sequelize_1.DataTypes.STRING,
     ewb_number: sequelize_1.DataTypes.STRING,
     dc_number: sequelize_1.DataTypes.STRING,
-    vendor_item_id: sequelize_1.DataTypes.NUMBER,
-    vendor_quantity_id: sequelize_1.DataTypes.NUMBER,
+    vendor_item_id: sequelize_1.DataTypes.INTEGER,
+    vendor_quantity_id: sequelize_1.DataTypes.INTEGER,
     attachments: sequelize_1.DataTypes.BLOB,
 }, {
     tableName: "bill",
-    sequalize: sequelize_2.sequelize2,
+    sequelize: sequelize_2.sequelize2,
 });
-Bill.belongsTo(vendorItem_1.vendor_item, { foreignKey: "vendor_item_id" });
-Bill.belongsTo(vendorQuantity_1.vendor_quantity, { foreignKey: "vendor_quantity_id" });
+// Bill.belongsTo(vendor_item, { foreignKey: "vendor_item_id" });
+// Bill.belongsTo(vendor_quantity, { foreignKey: "vendor_quantity_id" });
 // sequelize.sync();
 sequelize_2.sequelize2.sync({ logging: console.log });

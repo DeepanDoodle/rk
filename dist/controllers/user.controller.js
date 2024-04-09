@@ -27,8 +27,8 @@ UserController.signup = (req, res) => __awaiter(void 0, void 0, void 0, function
             return response_1.default.errors(req, res, code_1.ResponseStatus.HTTP_INTERNAL_SERVER_ERROR, "Signup error");
         }
         console.log(result);
-        console.log("user", result.usercreated);
-        return response_1.default.success(req, res, code_1.ResponseStatus.HTTP_CREATED, result.usercreated, "User created");
+        console.log("user", result.user);
+        return response_1.default.success(req, res, code_1.ResponseStatus.HTTP_CREATED, result.user, "User created");
     }
     catch (error) {
         return response_1.default.errors(req, res, code_1.ResponseStatus.HTTP_INTERNAL_SERVER_ERROR, "Signup error");
@@ -36,15 +36,12 @@ UserController.signup = (req, res) => __awaiter(void 0, void 0, void 0, function
 });
 UserController.login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { userName, password } = req.body;
-    console.log(userName);
     try {
         const result = yield userService_1.default.login(userName, password);
+        // console.log(result.data,"cvbnm")
         if (!result.success) {
             return response_1.default.errors(req, res, result.status, result.message);
         }
-<<<<<<< HEAD
-        const { user_found, accessToken } = result;
-=======
         // if (!result.success) {
         //   // return res.status(400).json({ error: result.error });
         //   return response.errors(
@@ -54,11 +51,10 @@ UserController.login = (req, res) => __awaiter(void 0, void 0, void 0, function*
         //     "Login error"
         //   );
         // }
-        const { user, accessToken } = result;
->>>>>>> 412b12b5a39d711210a2f0defbd463fca5ce25e5
+        // const { user, accessToken } = result;
         // return res.status(200).json({ user, accessToken });
-        const userObject = { user_found, accessToken };
-        return response_1.default.success(req, res, code_1.ResponseStatus.HTTP_CREATED, userObject, "Successfully LoggedIn");
+        // const userObject = { user, accessToken };
+        return response_1.default.success(req, res, code_1.ResponseStatus.HTTP_CREATED, result.data.accessToken, "Successfully LoggedIn");
         // return response.success(req, res,result.status,result.data,result.message);
     }
     catch (error) {

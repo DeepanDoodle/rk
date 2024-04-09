@@ -44,7 +44,7 @@ item.init({
     },
 }, {
     sequelize: sequelize_2.sequelize1,
-    modelName: 'product',
+    modelName: 'product', // Set the table name explicitly
     timestamps: false, // Disable timestamps columns (createdAt, updatedAt)
 });
 exports.default = item;

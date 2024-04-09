@@ -5,24 +5,24 @@ import { dbConfig } from "../config/dbConfig";
 
 // export const sequelize = new Sequelize(dbConfig.database!, dbConfig.username!, dbConfig.password, dbConfig);
 const config1: Options = {
-  username: "deepanrvdvenu@gmailcom",
-  password: "sqlpassword",
-  database: "rkmaster",
+  username: "root",
+  password: "Rishvan3@",
+  database: "rk_master",
   host: "localhost",
   dialect: "mysql",
 };
 
 const config2: Options = {
-  username: "deepanrvdvenu@gmailcom",
-  password: "sqlpassword",
+  username: "root",
+  password: "Rishvan3@",
   database: "user",
   host: "localhost",
   dialect: "mysql",
 };
 
 const config3: Options = {
-  username: "deepanrvdvenu@gmailcom",
-  password: "sqlpassword",
+  username: "root",
+  password: "Rishvan3@",
   database: "rkstore",
   host: "localhost",
   dialect: "mysql",
@@ -30,22 +30,22 @@ const config3: Options = {
 
 export const sequelize1 = new Sequelize(
   "rk_master",
-  "deepanrvdvenu@gmail.com",
-  "sqlpassword",
+  "root",
+  "Rishvan3@",
   config1
 );
 
 export const sequelize2 = new Sequelize(
   "user",
-  "deepanrvdvenu@gmail.com",
-  "sqlpassword",
+  "root",
+  "Rishvan3@",
   config2
 );
 
 export const sequelize3 = new Sequelize(
   "rkstore",
-  "deepanrvdvenu@gmail.com",
-  "sqlpassword",
+  "root",
+  "Rishvan3@",
   config3
 );
 
