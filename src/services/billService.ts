@@ -6,6 +6,7 @@ import { ResponseStatus } from "../responseCode/code";
 import { messages } from "../config/codeMsg";
 import sendMail from "../utils/email";
 import { vendor_quantity } from "../models/index";
+import { where } from "sequelize";
 export default class billService {
     static add: () => Promise<void>;
     static addQuantityService: (req: any) => Promise<any>;
@@ -33,6 +34,8 @@ export default class billService {
     | { success: boolean; status: number; message: string; data?: undefined }
   >;
     static currency: () => Promise<{ success: boolean; status: number; message: string; data: (string | null | undefined)[]; } | { success: boolean; status: number; message: string; data?: undefined; }>;
+    static editQuantityService: (req: any) => Promise<any>;
+    static deleteQuantityService: (req: any) => Promise<any>;
 }
 
 billService.add = async (
@@ -51,6 +54,69 @@ billService.addQuantityService= async(req:any):Promise<any> =>{
             success: true,
             status: ResponseStatus.HTTP_OK,
             message: messages.Quantity,
+            data:result,
+          };
+
+    }
+    catch(e){
+        console.log(e);
+    }
+}
+billService.editQuantityService= async(req:any):Promise<any> =>{
+    try{
+        const id=req?.params
+
+        const findid =await vendor_quantity.findOne({where:{_id:id}})
+        if(!findid){
+            return{
+                success:false,
+                status:ResponseStatus.HTTP_BAD_REQUEST,
+                messages:messages.notfound
+            }
+        }
+
+        const obj={
+            pkl_number:req.body||findid?.dataValues.pkl_number,
+            bale_number:req.body||findid?.dataValues.bale_number,
+            quantity:req.body||findid?.dataValues.bale_number,
+            remarks:req.body||findid?.dataValues.bale_number
+        }
+       
+
+        // const {pkl_number,bale_number,quantity,remarks}=req.body
+        const result = await vendor_quantity.update(obj, { where: { _id: id } });
+        return {
+            success: true,
+            status: ResponseStatus.HTTP_OK,
+            message: messages.updated,
+            data:result,
+          };
+
+    }
+    catch(e){
+        console.log(e);
+    }
+}
+billService.deleteQuantityService= async(req:any):Promise<any> =>{
+    try{
+        const id=req?.params
+
+        const findid =await vendor_quantity.findOne({where:{_id:id}})
+        if(!findid){
+            return{
+                success:false,
+                status:ResponseStatus.HTTP_BAD_REQUEST,
+                messages:messages.notfound
+            }
+        }
+
+        let result =await vendor_quantity.destroy({where:{_id:id}})
+
+
+        return {
+            success: true,
+            status: ResponseStatus.HTTP_OK,
+            message: messages.deleted,
             data:result,
           };
 

@@ -23,6 +23,26 @@ class Validation {
           ExceptionErrors.Errorhandler(err, req, res, next);
         }
       }
+      async editQuantituValidation(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+          const schema = joi.object({
+            pkl_number: joi.number().optional(),
+            bale_number: joi.number().optional(),
+            quantity:joi.number().optional(),
+            remarks:joi.string().optional(),
+            vendor_item_id:joi.string().optional(),
+            bill_id:joi.string().optional(),
+            barcode:joi.string().optional()
+
+          });
+    
+          await schema.validateAsync(req.body);
+    
+          next();
+        } catch (err) {
+          ExceptionErrors.Errorhandler(err, req, res, next);
+        }
+      }
       async poNumberValidation(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
           const schema = joi.object({

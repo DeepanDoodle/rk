@@ -9,5 +9,7 @@ billRoutes.get("/supplierName",Authenticate.verifyToken,billController.supplierN
 billRoutes.get("/typeOfRawMaterials",billController.typeOfRawMaterials);
 billRoutes.get("/currency",billController.currency);
 billRoutes.post('/addqunatity',validator.bill.addQuantituValidation, billController.addQuantity)
+billRoutes.put('/editQuantity/:_id',validator.bill.editQuantituValidation,billController.editQuantity)
+billRoutes.delete('/deleteQuantity/:_id',billController.deleteQuantity)
 billRoutes.get('/poNumber',validator.bill.poNumberValidation,billController.findPo)
 export default billRoutes;

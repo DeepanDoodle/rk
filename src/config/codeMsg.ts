@@ -59,8 +59,11 @@ export const messages = {
     resetPassword: "Reset password successfully",
     alreadyExist:"Already exist",
     uploadfailed:"Upload error failed",
-    Quantity:"vendor qunatity added",
+    Quantity:"vendor qunatity details added",
+    updated:"vendor qunatity details updated",
+    deleted:"vendor qunatity deleted sucessfully",
     pofetched:"ponumber fetched sucessfully",
+    notfound:"given quantity id not found",
     
     100: "Continue",
     101: "Switching Protocols",

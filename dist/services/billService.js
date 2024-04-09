@@ -33,6 +33,59 @@ billService.addQuantityService = (req) => __awaiter(void 0, void 0, void 0, func
         console.log(e);
     }
 });
+billService.editQuantityService = (req) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req === null || req === void 0 ? void 0 : req.params;
+        const findid = yield index_2.vendor_quantity.findOne({ where: { _id: id } });
+        if (!findid) {
+            return {
+                success: false,
+                status: code_1.ResponseStatus.HTTP_BAD_REQUEST,
+                messages: codeMsg_1.messages.notfound
+            };
+        }
+        const obj = {
+            pkl_number: req.body || (findid === null || findid === void 0 ? void 0 : findid.dataValues.pkl_number),
+            bale_number: req.body || (findid === null || findid === void 0 ? void 0 : findid.dataValues.bale_number),
+            quantity: req.body || (findid === null || findid === void 0 ? void 0 : findid.dataValues.bale_number),
+            remarks: req.body || (findid === null || findid === void 0 ? void 0 : findid.dataValues.bale_number)
+        };
+        // const {pkl_number,bale_number,quantity,remarks}=req.body
+        const result = yield index_2.vendor_quantity.update(obj, { where: { _id: id } });
+        return {
+            success: true,
+            status: code_1.ResponseStatus.HTTP_OK,
+            message: codeMsg_1.messages.updated,
+            data: result,
+        };
+    }
+    catch (e) {
+        console.log(e);
+    }
+});
+billService.deleteQuantityService = (req) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req === null || req === void 0 ? void 0 : req.params;
+        const findid = yield index_2.vendor_quantity.findOne({ where: { _id: id } });
+        if (!findid) {
+            return {
+                success: false,
+                status: code_1.ResponseStatus.HTTP_BAD_REQUEST,
+                messages: codeMsg_1.messages.notfound
+            };
+        }
+        let result = yield index_2.vendor_quantity.destroy({ where: { _id: id } });
+        return {
+            success: true,
+            status: code_1.ResponseStatus.HTTP_OK,
+            message: codeMsg_1.messages.deleted,
+            data: result,
+        };
+    }
+    catch (e) {
+        console.log(e);
+    }
+});
 billService.addItemService = (req) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { pkl_number, bale_number, quantity, remarks } = req.body;

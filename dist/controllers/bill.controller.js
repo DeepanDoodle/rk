@@ -68,6 +68,30 @@ billController.addQuantity = (req, res) => __awaiter(void 0, void 0, void 0, fun
         return response_1.default.errors(req, res, code_1.ResponseStatus.HTTP_INTERNAL_SERVER_ERROR, "internal server error");
     }
 });
+billController.editQuantity = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield billService_1.default.editQuantityService(req);
+        if (!result.success) {
+            return response_1.default.errors(req, res, result.status, result.message);
+        }
+        return response_1.default.success(req, res, result.status, null, result.message);
+    }
+    catch (err) {
+        return response_1.default.errors(req, res, code_1.ResponseStatus.HTTP_INTERNAL_SERVER_ERROR, "internal server error");
+    }
+});
+billController.deleteQuantity = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield billService_1.default.deleteQuantityService(req);
+        if (!result.success) {
+            return response_1.default.errors(req, res, result.status, result.message);
+        }
+        return response_1.default.success(req, res, result.status, null, result.message);
+    }
+    catch (err) {
+        return response_1.default.errors(req, res, code_1.ResponseStatus.HTTP_INTERNAL_SERVER_ERROR, "internal server error");
+    }
+});
 billController.findPo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield billService_1.default.findPoService(req);

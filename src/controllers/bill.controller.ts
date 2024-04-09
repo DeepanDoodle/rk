@@ -9,6 +9,8 @@ export default class billController {
     static addQuantity: any
 static currency: any;
     static findPo: any;
+    static editQuantity: any;
+    static deleteQuantity: any;
 }
 
 billController.supplierName = async (req: any, res: Response) => {
@@ -97,6 +99,34 @@ billController.addQuantity = async (req: Request, res: Response) => {
         const result = await billService.addQuantityService(req);
 
         return response.success(req, res, result.status, result.data, result.message);
+    }
+    catch (err) {
+        return response.errors(req, res, ResponseStatus.HTTP_INTERNAL_SERVER_ERROR, "internal server error")
+
+    }
+};
+billController.editQuantity = async (req: Request, res: Response) => {
+    try {
+        const result = await billService.editQuantityService(req);
+        if(!result.success){
+            return response.errors(req,res,result.status,result.message)
+        }
+
+        return response.success(req, res, result.status, null, result.message);
+    }
+    catch (err) {
+        return response.errors(req, res, ResponseStatus.HTTP_INTERNAL_SERVER_ERROR, "internal server error")
+
+    }
+};
+billController.deleteQuantity = async (req: Request, res: Response) => {
+    try {
+        const result = await billService.deleteQuantityService(req);
+        if(!result.success){
+            return response.errors(req,res,result.status,result.message)
+        }
+
+        return response.success(req, res, result.status, null, result.message);
     }
     catch (err) {
         return response.errors(req, res, ResponseStatus.HTTP_INTERNAL_SERVER_ERROR, "internal server error")

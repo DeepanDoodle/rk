@@ -35,6 +35,26 @@ class Validation {
             }
         });
     }
+    editQuantituValidation(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const schema = joi_1.default.object({
+                    pkl_number: joi_1.default.number().optional(),
+                    bale_number: joi_1.default.number().optional(),
+                    quantity: joi_1.default.number().optional(),
+                    remarks: joi_1.default.string().optional(),
+                    vendor_item_id: joi_1.default.string().optional(),
+                    bill_id: joi_1.default.string().optional(),
+                    barcode: joi_1.default.string().optional()
+                });
+                yield schema.validateAsync(req.body);
+                next();
+            }
+            catch (err) {
+                handler_1.ExceptionErrors.Errorhandler(err, req, res, next);
+            }
+        });
+    }
     poNumberValidation(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
