@@ -30,7 +30,5 @@ Bill.init({
     tableName: "bill",
     sequelize: sequelize_2.sequelize2,
 });
-// Bill.belongsTo(vendor_item, { foreignKey: "vendor_item_id" });
-// Bill.belongsTo(vendor_quantity, { foreignKey: "vendor_quantity_id" });
 // sequelize.sync();
 sequelize_2.sequelize2.sync({ logging: console.log });

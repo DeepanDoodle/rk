@@ -7,7 +7,9 @@ import item from "./item";
 import po from "./po";
 import { vendor_item } from "./vendorItem";
 import { vendor_quantity } from "./vendorQuantity";
-import { User } from "./user";
+import mcat from "./mcat";
+import currency from "./currency";
+// import { User } from "./user";
 import {balanceToSupply} from "./balanceToSupply"
 
 export {
@@ -19,6 +21,8 @@ export {
   po,
   vendor_item,
   vendor_quantity,
-  User,
+  mcat,
+  currency
+  ,
   balanceToSupply
 };

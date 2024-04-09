@@ -19,11 +19,58 @@ const billService_1 = __importDefault(require("../services/billService"));
 class billController {
 }
 exports.default = billController;
-billController.add = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+billController.supplierName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const id = req.id;
+        console.log("id", id);
+        const result = yield billService_1.default.supplierName(id);
+        if (!result.success) {
+            return response_1.default.errors(req, res, result.status, result.message);
+        }
+        return response_1.default.success(req, res, result.status, result.data, result.message);
+    }
+    catch (error) {
+        return response_1.default.errors(req, res, code_1.ResponseStatus.HTTP_INTERNAL_SERVER_ERROR, "SupplierName error");
+    }
 });
+billController.typeOfRawMaterials = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield billService_1.default.typeOfRawMaterials();
+        if (!result.success) {
+            return response_1.default.errors(req, res, result.status, result.message);
+        }
+        return response_1.default.success(req, res, result.status, result.data, result.message);
+    }
+    catch (error) {
+        return response_1.default.errors(req, res, code_1.ResponseStatus.HTTP_INTERNAL_SERVER_ERROR, "Type Of Raw Materials error");
+    }
+});
+billController.currency = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield billService_1.default.currency();
+        if (!result.success) {
+            return response_1.default.errors(req, res, result.status, result.message);
+        }
+        return response_1.default.success(req, res, result.status, result.data, result.message);
+    }
+    catch (error) {
+        return response_1.default.errors(req, res, code_1.ResponseStatus.HTTP_INTERNAL_SERVER_ERROR, "Currency error");
+    }
+});
+// billController.add = async (req: Request, res: Response) => {
+// }
 billController.addQuantity = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield billService_1.default.addQuantityService(req);
+        return response_1.default.success(req, res, result.status, result.data, result.message);
+    }
+    catch (err) {
+        return response_1.default.errors(req, res, code_1.ResponseStatus.HTTP_INTERNAL_SERVER_ERROR, "internal server error");
+    }
+});
+billController.findPo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield billService_1.default.findPoService(req);
         return response_1.default.success(req, res, result.status, result.data, result.message);
     }
     catch (err) {

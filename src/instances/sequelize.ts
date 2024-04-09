@@ -50,5 +50,5 @@ export const sequelize3 = new Sequelize(
 );
 
 export const verifyDBConnection = async () => {
-  await Promise.all([sequelize1.authenticate(), sequelize2.authenticate()]);
+  await Promise.all([sequelize1.authenticate(), sequelize2.authenticate(),sequelize3.authenticate()]);
 };

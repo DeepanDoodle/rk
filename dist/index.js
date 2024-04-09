@@ -55,7 +55,10 @@ app.use(express_1.default.static("public"));
 app.use(express_1.default.text());
 app.use(express_1.default.raw());
 app.use((0, helmet_1.default)());
-app.use((0, cors_1.default)());
+const corsOptions = {
+    origin: 'http://localhost:3000',
+};
+app.use((0, cors_1.default)(corsOptions));
 app.use((0, compression_1.default)());
 //Logger
 // app.use(appLogger.requestDetails(appLogger));
@@ -106,7 +109,7 @@ app.use((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
 // app.listen(PORT, () => {
 //   console.log("Server is running on port", PORT);
 // });
-Promise.all([sequelize_1.sequelize1.sync(), sequelize_1.sequelize2.sync()])
+Promise.all([sequelize_1.sequelize1.sync(), sequelize_1.sequelize2.sync(), sequelize_1.sequelize3.sync()])
     .then(() => {
     // Start the server after models are synchronized
     app.listen(PORT, () => {

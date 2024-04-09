@@ -35,5 +35,19 @@ class Validation {
             }
         });
     }
+    poNumberValidation(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const schema = joi_1.default.object({
+                    type_of_raw_material: joi_1.default.string().required()
+                });
+                yield schema.validateAsync(req.body);
+                next();
+            }
+            catch (err) {
+                handler_1.ExceptionErrors.Errorhandler(err, req, res, next);
+            }
+        });
+    }
 }
 exports.default = new Validation();

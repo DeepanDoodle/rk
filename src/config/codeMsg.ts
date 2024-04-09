@@ -60,6 +60,7 @@ export const messages = {
     alreadyExist:"Already exist",
     uploadfailed:"Upload error failed",
     Quantity:"vendor qunatity added",
+    pofetched:"ponumber fetched sucessfully",
     
     100: "Continue",
     101: "Switching Protocols",

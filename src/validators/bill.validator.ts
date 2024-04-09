@@ -23,5 +23,18 @@ class Validation {
           ExceptionErrors.Errorhandler(err, req, res, next);
         }
       }
+      async poNumberValidation(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+          const schema = joi.object({
+            type_of_raw_material:joi.string().required()
+          });
+    
+          await schema.validateAsync(req.body);
+    
+          next();
+        } catch (err) {
+          ExceptionErrors.Errorhandler(err, req, res, next);
+        }
+      }
     }
     export default new Validation();

@@ -38,6 +38,6 @@ exports.sequelize1 = new sequelize_1.Sequelize("rk_master", "root", "Rishvan3@",
 exports.sequelize2 = new sequelize_1.Sequelize("user", "root", "Rishvan3@", config2);
 exports.sequelize3 = new sequelize_1.Sequelize("rkstore", "root", "Rishvan3@", config3);
 const verifyDBConnection = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield Promise.all([exports.sequelize1.authenticate(), exports.sequelize2.authenticate()]);
+    yield Promise.all([exports.sequelize1.authenticate(), exports.sequelize2.authenticate(), exports.sequelize3.authenticate()]);
 });
 exports.verifyDBConnection = verifyDBConnection;

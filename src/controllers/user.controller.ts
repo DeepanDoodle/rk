@@ -9,42 +9,42 @@ export default class UserController {
   static resetPasswordController: (req: Request, res: Response) => Promise<any>;
 }
 
-UserController.signup = async (req: Request, res: Response) => {
-  let { userName, vendorName, email, password } = req.body;
-  console.log(userName, vendorName, email, password);
-  try {
-    const result = await UserService.signup(
-      userName,
-      vendorName,
-      email,
-      password
-    );
-    if (result.error) {
-      return response.errors(
-        req,
-        res,
-        ResponseStatus.HTTP_INTERNAL_SERVER_ERROR,
-        "Signup error"
-      );
-    }
-    console.log(result);
-    console.log("user", result.user);
-    return response.success(
-      req,
-      res,
-      ResponseStatus.HTTP_CREATED,
-      result.user,
-      "User created"
-    );
-  } catch (error) {
-    return response.errors(
-      req,
-      res,
-      ResponseStatus.HTTP_INTERNAL_SERVER_ERROR,
-      "Signup error"
-    );
-  }
-};
+// UserController.signup = async (req: Request, res: Response) => {
+//   let { userName, vendorName, email, password } = req.body;
+//   console.log(userName, vendorName, email, password);
+//   try {
+//     const result = await UserService.signup(
+//       userName,
+//       vendorName,
+//       email,
+//       password
+//     );
+//     if (result.error) {
+//       return response.errors(
+//         req,
+//         res,
+//         ResponseStatus.HTTP_INTERNAL_SERVER_ERROR,
+//         "Signup error"
+//       );
+//     }
+//     console.log(result);
+//     console.log("user", result.user);
+//     return response.success(
+//       req,
+//       res,
+//       ResponseStatus.HTTP_CREATED,
+//       result.user,
+//       "User created"
+//     );
+//   } catch (error) {
+//     return response.errors(
+//       req,
+//       res,
+//       ResponseStatus.HTTP_INTERNAL_SERVER_ERROR,
+//       "Signup error"
+//     );
+//   }
+// };
 
 UserController.login = async (req: Request, res: Response) => {
   const { userName, password } = req.body;
@@ -89,22 +89,22 @@ UserController.login = async (req: Request, res: Response) => {
   }
 }
 
-  UserController.forgetPasswordController = async  (req: Request, res: Response)=> {
-    try { 
-      const result = await UserService.forgetPasswordService(req);
+//   UserController.forgetPasswordController = async  (req: Request, res: Response)=> {
+//     try { 
+//       const result = await UserService.forgetPasswordService(req);
   
-      if (!result.success) {
-        return response.errors(req, res,result.status,result.message)
-      }
-      return response.success(req, res,result.status,null,result.message);
-    } catch (err) {
-      return response.errors(req, res,ResponseStatus.HTTP_INTERNAL_SERVER_ERROR,"internal server error")  }
-  }
+//       if (!result.success) {
+//         return response.errors(req, res,result.status,result.message)
+//       }
+//       return response.success(req, res,result.status,null,result.message);
+//     } catch (err) {
+//       return response.errors(req, res,ResponseStatus.HTTP_INTERNAL_SERVER_ERROR,"internal server error")  }
+//   }
 
-UserController.resetPasswordController = async (req: Request, res: Response) =>{
-  try {
-    const result = await UserService.resetPasswordService(req);
-    return response.success(req, res,result.status,null,result.message);
-  } catch (err) {
-    return response.errors(req, res,ResponseStatus.HTTP_INTERNAL_SERVER_ERROR,"internal server error")  }
-}
+// UserController.resetPasswordController = async (req: Request, res: Response) =>{
+//   try {
+//     const result = await UserService.resetPasswordService(req);
+//     return response.success(req, res,result.status,null,result.message);
+//   } catch (err) {
+//     return response.errors(req, res,ResponseStatus.HTTP_INTERNAL_SERVER_ERROR,"internal server error")  }
+// }

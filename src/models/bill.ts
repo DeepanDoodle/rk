@@ -18,7 +18,6 @@ export class Bill extends Model {
   public dc_number!: string ;
   public vendor_item_id!: number;
   public vendor_quantity_id!: number;
-  public attachments: Blob | undefined;
 }
 
 (Bill as any).init(
@@ -49,8 +48,7 @@ export class Bill extends Model {
   }
 );
 
-// Bill.belongsTo(vendor_item, { foreignKey: "vendor_item_id" });
-// Bill.belongsTo(vendor_quantity, { foreignKey: "vendor_quantity_id" });
+
 
 // sequelize.sync();
 sequelize2.sync({ logging: console.log });
